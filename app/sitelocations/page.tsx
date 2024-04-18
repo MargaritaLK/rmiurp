@@ -6,7 +6,7 @@ import * as turf from '@turf/turf';
 import Image from "next/image";
 import {useState, useEffect, useMemo, useCallback} from 'react';
 
-import Map, {Source, Layer} from 'react-map-gl';
+import Map, {Popup, Source, Layer} from 'react-map-gl';
 
 import {AttributionControl} from 'react-map-gl';
 
@@ -18,7 +18,8 @@ import { Footer } from '@/components/footer';
 // import { aucklandcoastStyle} from '../../utils/mapboxlayers/projectlayers';
 import { sitelocationsLineStyle} from '../../utils/mapboxlayers/projectlayers'
 import { sitelocationsOddsLineStyle} from '../../utils/mapboxlayers/projectlayers'
-import { bboxStyle} from '../../utils/mapboxlayers/turflayers';
+import { log } from 'console';
+
 
 
 const MAPBOX_PUBLIC_TOKEN = 'pk.eyJ1IjoibWFyZ2FyaXRhMTIiLCJhIjoiY2s1Nm5mNWpxMDRvcTNtbHppYm4xeTJpOSJ9.boMER5L2ddRxh1pR7hDWJA'; 
@@ -29,9 +30,7 @@ export default function Coastalmap() {
   
   const [sitelocationsData, setSitelocationsData] = useState(null)
   const [sitelocationsOddsData, setSitelocationsOddsData] = useState(null)
-  const [hoverInfo, setHoverInfo] = useState(null);
-  
-  
+ 
   useEffect(() => {
     /* global fetch */
     fetch(
@@ -43,11 +42,6 @@ export default function Coastalmap() {
       setSitelocationsData(json)})
       .catch(err => console.error('Could not load data', err)); // eslint-disable-line
     }, []);
-
-
-  
-
-      
   
   useEffect(() => {
     /* global fetch */
@@ -62,39 +56,37 @@ export default function Coastalmap() {
     }, []);
 
 
-  
-    
-
-    const onHover = useCallback(event => {
-      const {
-        features,
-        point: {x, y}
-      } = event;
-      const hoveredFeature = features && features[0];
-      
-      // prettier-ignore
-      setHoverInfo(hoveredFeature && {feature: hoveredFeature, x, y});
-    }, []);
-    
-    
-    
- 
-
     const data1 = useMemo(() => {
       return sitelocationsData
     }, [sitelocationsData])
 
-
-
-    
     const data2 = useMemo(() => {
       return sitelocationsOddsData
     }, [sitelocationsOddsData])
 
 
 
+    // const [allData, setAllData] = useState(null);
+    // const [hoverInfo, setHoverInfo] = useState(null)
 
-    
+    // const onHover = useCallback(event => {
+    //   const {
+    //     features,
+    //     point: {x, y}
+    //   } = event;
+    //   const hoveredFeature = features && features[0];
+  
+    //   // prettier-ignore
+    //   setHoverInfo(hoveredFeature && {feature: hoveredFeature, x, y});
+    // }, []);
+  
+    // const data = useMemo(() => {
+    //   return allData && updatePercentiles(allData, f => f.properties.income[year]);
+    // }, [allData, year]);
+  
+
+
+
     return (
       <div>
       <Navbar />
@@ -111,17 +103,19 @@ export default function Coastalmap() {
       <Map
       style={{ height: '90vh'}}
       initialViewState={{
-        latitude: 7.09929244603147058,
-        longitude: 171.30422338904287471,
+        latitude: 7.099292,
+        longitude: 171.30422,
         zoom: 12
       }}
+      
       
       mapStyle="mapbox://styles/margarita12/clusyi3io000y01rb5qlnhjq8" //               
       // mapStyle="mapbox://styles/mapbox/satellite-v9" //               
       mapboxAccessToken={MAPBOX_PUBLIC_TOKEN}
       interactiveLayerIds={['data1']}
-      onMouseMove={onHover}
+      // onMouseMove={onHover}
       attributionControl={false}
+      
       >
 
   
@@ -139,18 +133,23 @@ export default function Coastalmap() {
       <Layer {...sitelocationsOddsLineStyle} />
       </Source>
 
+
+
+      {/* {selectedSite && (
+          <Popup
+            longitude={hoverInfo.longitude}
+            latitude={hoverInfo.latitude}
+            // offset={[0, -10]}
+            closeButton={false}
+            className="county-info"
+          >
+            {selectedSite}
+          </Popup>
+        )} */}
+
   
 
 
-  
-
-
-
-{hoverInfo && (
-  <div className="tooltip" style={{left: hoverInfo.x, top: hoverInfo.y}}>
-  <div>river: {hoverInfo.feature.properties.name}</div>
-  </div>
-)}
 
 </Map>
 
