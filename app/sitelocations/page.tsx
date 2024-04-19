@@ -17,6 +17,7 @@ import { Footer } from '@/components/footer';
 import { sitelocationsLineStyle} from '../../utils/mapboxlayers/projectlayers'
 import { sitelocationsOddsLineStyle} from '../../utils/mapboxlayers/projectlayers'
 import { sitelocationsSymbolStyle} from '../../utils/mapboxlayers/projectlayers'
+import { sitelocationslargeSymbolStyle} from '../../utils/mapboxlayers/projectlayers'
 import { log } from 'console';
 
 
@@ -30,6 +31,7 @@ export default function Coastalmap() {
   const [sitelocationsData, setSitelocationsData] = useState(null)
   const [sitelocationsOddsData, setSitelocationsOddsData] = useState(null)
   const [namesData, setSNamesData] = useState(null)
+  const [namesLargeData, setNamesLargeData] = useState(null)
   
   useEffect(() => {
     /* global fetch */
@@ -69,6 +71,20 @@ export default function Coastalmap() {
         }, []);
         
   
+  
+      useEffect(() => {
+          /* global fetch */
+          fetch(
+            'https://raw.githubusercontent.com/MargaritaLK/__data_experimental/main/P_RMI/larger_site_names.geojson'
+          )
+          .then(resp => resp.json())
+          .then(json => {
+            // console.log(json);
+            setNamesLargeData(json)})
+            .catch(err => console.error('Could not load data', err)); // eslint-disable-line
+          }, []);
+          
+    
         
       const data1 = useMemo(() => {
         return sitelocationsData
@@ -83,6 +99,11 @@ export default function Coastalmap() {
       const data3 = useMemo(() => {
         return namesData
       }, [namesData])
+    
+
+      const data4 = useMemo(() => {
+        return namesLargeData
+      }, [namesLargeData])
     
       
       
@@ -133,6 +154,10 @@ export default function Coastalmap() {
 
         <Source id='sitenames' type="geojson" data = {data3}>
         <Layer {...sitelocationsSymbolStyle} />
+        </Source>
+        
+        <Source id='sitenameslarge' type="geojson" data = {data4}>
+        <Layer {...sitelocationslargeSymbolStyle} />
         </Source>
         
 
