@@ -55,5 +55,26 @@ export const sitelocationsSymbolStyle: SymbolLayer = {
 
 
 
+export const sitelocationslargeSymbolStyle: SymbolLayer = {
+  id: 'sitenameslarge', 
+  type: 'symbol',
+  layout: {
+    "text-field": '{name}',
+    "text-font": [
+      "DIN Offc Pro Medium",
+      "Arial Unicode MS Bold"
+    ],
+    "text-size": 17, 
+  }, 
+  paint: {
+    "text-color": "#e77148" ,
+    // "text-color": "#212529", 
+    "text-halo-color": "#212529",
+    "text-halo-width": 1
+  }
+}
+
+
+
 
 //     "text-color": "#e77148" ,

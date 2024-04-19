@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "loki",
-  description: "Experimental app ",
+  description: "RMI Urban Resilience Project ",
 };
 
 export default function RootLayout({
