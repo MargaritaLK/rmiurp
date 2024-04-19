@@ -109,8 +109,9 @@ export default function Coastalmap() {
         }}
         
         
-        // mapStyle="mapbox://styles/margarita12/clusyi3io000y01rb5qlnhjq8" //                         
-        mapStyle="mapbox://styles/margarita12/clv5x15je00je01og12u1g1lw" //                         
+        // mapStyle="mapbox://styles/mapbox/satellite-v9" //                         
+        // mapStyle="mapbox://styles/margarita12/clv5x15je00je01og12u1g1lw" //                         
+        mapStyle="mapbox://styles/margarita12/clv5ytkac00jz01pp842u728a" //                         
         mapboxAccessToken={MAPBOX_PUBLIC_TOKEN}
         interactiveLayerIds={['data1']}
         // onMouseMove={onHover}
