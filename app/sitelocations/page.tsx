@@ -16,8 +16,6 @@ import { Footer } from '@/components/footer';
 
 import {water_mpx, buildings_mpx} from '../../utils/mapboxlayers/mapboxlayers'
 
-import { sitelocationsLineStyle} from '../../utils/mapboxlayers/projectlayers'
-import { sitelocationsOddsLineStyle} from '../../utils/mapboxlayers/projectlayers'
 import { sitelocationsCoastLineStyle} from '../../utils/mapboxlayers/projectlayers'
 
 
@@ -41,8 +39,6 @@ const MAPBOX_PUBLIC_TOKEN = 'pk.eyJ1IjoibWFyZ2FyaXRhMTIiLCJhIjoiY2s1Nm5mNWpxMDRv
 
 export default function Coastalmap() {
   
-  const [sitelocationsData, setSitelocationsData] = useState(null)
-  const [sitelocationsOddsData, setSitelocationsOddsData] = useState(null)
   const [sitelocationsCoastData, setSitelocationsCoastData] = useState(null)
   const [namesData, setSNamesData] = useState(null)
   const [namesLargeData, setNamesLargeData] = useState(null)
@@ -52,32 +48,7 @@ export default function Coastalmap() {
 
 
 
-  
-  
-  useEffect(() => {
-    /* global fetch */
-    fetch(
-      'https://raw.githubusercontent.com/MargaritaLK/__data_experimental/main/P_RMI/sitelocation.geojson'
-    )
-    .then(resp => resp.json())
-    .then(json => {
-      setSitelocationsData(json)})
-      .catch(err => console.error('Could not load data', err)); // eslint-disable-line
-    }, []);
-    
-    useEffect(() => {
-      /* global fetch */
-      fetch(
-        'https://raw.githubusercontent.com/MargaritaLK/__data_experimental/main/P_RMI/sitelocation_odds_2.geojson'
-      )
-      .then(resp => resp.json())
-      .then(json => {
-        // console.log(json);
-        setSitelocationsOddsData(json)})
-        .catch(err => console.error('Could not load data', err)); // eslint-disable-line
-      }, []);
-      
-      
+
       
       useEffect(() => {
         /* global fetch */
@@ -162,16 +133,6 @@ export default function Coastalmap() {
               }, []);
     
   
-
-          const data1 = useMemo(() => {
-            return sitelocationsData
-          }, [sitelocationsData])
-          
-          
-          const data2 = useMemo(() => {
-            return sitelocationsOddsData
-          }, [sitelocationsOddsData])
-          
           
           const data3 = useMemo(() => {
             return namesData
@@ -222,9 +183,9 @@ export default function Coastalmap() {
             
             style={{ height: '90vh'}}
             initialViewState={{
-              latitude: 7.099292,
+              latitude: 7.0999,
               longitude: 171.30422,
-              zoom: 12
+              zoom: 11.2
             }}
             
             
@@ -251,16 +212,6 @@ export default function Coastalmap() {
             <NavigationControl position="top-left" />
             
             
-            
-            {/* <Source id='sitelocations' type="geojson" data = {data1}>
-            <Layer {...sitelocationsLineStyle} />
-            </Source>
-            
-            
-            <Source id='sitelocationsOdds' type="geojson" data = {data2}>
-            <Layer {...sitelocationsOddsLineStyle} />
-            </Source>
-             */}
 
 
           {/* <Source id='EAAD100' type="geojson" data = {data8}>
@@ -272,19 +223,23 @@ export default function Coastalmap() {
             <Source id='sitelocationsCoast' type="geojson" data = {data7}>
             <Layer {...sitelocationsCoastLineStyle} />
             </Source>
+
+            
+            <Source id='coastalclass1' type="geojson" data = {data5}>
+            <Layer {...coastalineLineStyle1} />
+            </Source>
+
             
             <Source id='sitenames' type="geojson" data = {data3}>
             <Layer {...sitelocationsSymbolStyle} />
             </Source>
+
+
             
             <Source id='sitenameslarge' type="geojson" data = {data4}>
             <Layer {...sitelocationslargeSymbolStyle} />
             </Source>
             
-
-            <Source id='coastalclass1' type="geojson" data = {data5}>
-            <Layer {...coastalineLineStyle1} />
-            </Source>
 
 
 
@@ -300,8 +255,10 @@ export default function Coastalmap() {
             </Source>
              */}
                 
+
+
           {/* <Layer {...buildings_mpx} /> */}
-  {/* <Layer {...water_mpx} />  */}
+      {/* <Layer {...water_mpx} />  */}
   
             
             
