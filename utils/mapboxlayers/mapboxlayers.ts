@@ -19,7 +19,7 @@ export const water_mpx: FillLayer = {
 export const buildings_mpx: FillLayer = {
   id: 'building',
   type: 'fill',
-  source: 'mpabox-street',
+  source: 'mapbox-street',
   'source-layer': 'building',
   paint: {
     'fill-color': '#f12053', 
