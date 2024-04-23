@@ -26,6 +26,7 @@ import { sitelocationslargeSymbolStyle} from '../../utils/mapboxlayers/projectla
 import { coastalineLineStyle1} from '../../utils/mapboxlayers/projectlayers'
 import { coastalineLineStyle2} from '../../utils/mapboxlayers/projectlayers'
 import { buildingDataFillStyle} from '../../utils/mapboxlayers/projectlayers'
+import { EAADFillStyle} from '../../utils/mapboxlayers/projectlayers'
 
 
 
@@ -47,6 +48,9 @@ export default function Coastalmap() {
   const [namesLargeData, setNamesLargeData] = useState(null)
   const [coastalClassData, setCoastalClassData] = useState(null)
   const [buildingData, setBuildingData] = useState(null)
+  const [EAAD100, setEAAD100] = useState(null)
+
+
 
   
   
@@ -145,6 +149,20 @@ export default function Coastalmap() {
   
 
 
+            useEffect(() => {
+              /* global fetch */
+              fetch(
+                'https://raw.githubusercontent.com/MargaritaLK/__data_experimental/main/P_RMI/EAAD_100_v2.geojson'
+              )
+              .then(resp => resp.json())
+              .then(json => {
+                // console.log(json);
+                setEAAD100(json)})
+                .catch(err => console.error('Could not load data', err)); // eslint-disable-line
+              }, []);
+    
+  
+
           const data1 = useMemo(() => {
             return sitelocationsData
           }, [sitelocationsData])
@@ -181,7 +199,14 @@ export default function Coastalmap() {
           }, [sitelocationsCoastData])
 
           
+          const data8 = useMemo(() => {
+            return EAAD100
+          }, [EAAD100])
+
           
+          
+
+
           return (
             <div>
             <Navbar />
@@ -206,9 +231,14 @@ export default function Coastalmap() {
             // mapStyle="mapbox://styles/mapbox/satellite-streets-v12" //                         
             // mapStyle="mapbox://styles/margarita12/clv5x15je00je01og12u1g1lw" //                         
             // mapStyle="mapbox://styles/margarita12/clv5ytkac00jz01pp842u728a" //           Lighter version        
-            // mapStyle="mapbox://styles/mapbox/outdoors-v12" //           outdoors        
-            mapStyle="mapbox://styles/margarita12/clusyi3io000y01rb5qlnhjq8" //           outdoors        
+            // mapStyle="mapbox://styles/mapbox/outdoors-v12"                   //           outdoors        
+            // mapStyle="mapbox://styles/margarita12/clusyi3io000y01rb5qlnhjq8" //         dark
+            mapStyle="mapbox://styles/margarita12/clvbsui1j00rz01rje0io2akc" //         dark
+            // mapStyle="mapbox://styles/margarita12/clvbvzzch006q01rdc5y2g2hf" //         dark
+            
 
+            
+                    
 
             
             
@@ -231,6 +261,13 @@ export default function Coastalmap() {
             <Layer {...sitelocationsOddsLineStyle} />
             </Source>
              */}
+
+
+          {/* <Source id='EAAD100' type="geojson" data = {data8}>
+            <Layer {...EAADFillStyle} />
+            </Source>
+  */}
+
             
             <Source id='sitelocationsCoast' type="geojson" data = {data7}>
             <Layer {...sitelocationsCoastLineStyle} />
@@ -248,9 +285,12 @@ export default function Coastalmap() {
             <Source id='coastalclass1' type="geojson" data = {data5}>
             <Layer {...coastalineLineStyle1} />
             </Source>
-            
 
-            {/* <Source id='coastalclass2' type="geojson" data = {data5}>
+
+
+            
+{/* 
+            <Source id='coastalclass2' type="geojson" data = {data5}>
             <Layer {...coastalineLineStyle2} />
             </Source>
              */}
